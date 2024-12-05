@@ -1,0 +1,6 @@
+img2pdf
+pytest-playwright
+requests
+pyside6
+pathlib
+bs4

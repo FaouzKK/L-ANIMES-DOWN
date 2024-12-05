@@ -1,0 +1,6 @@
+.venv
+**/__pycache__
+tester.py
+.vscode
+build
+dist

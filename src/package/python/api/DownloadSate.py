@@ -1,0 +1,2 @@
+LOADING = 'loading'
+ERROR = 'error'
