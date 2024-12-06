@@ -16,7 +16,7 @@ class AnimeSamaVideoDownloader:
     def get_episode_m3u8_url(self, url:str, episode:str|None=None):
         try:
             with sync_api.sync_playwright() as p:
-                self.get_episode_browser = p.firefox.launch(headless=Debug)
+                self.get_episode_browser = p.firefox.launch(headless=False)
                 
                 # Ouverture du browser 
                 self.get_episode_page = self.get_episode_browser.new_page()
@@ -43,21 +43,18 @@ class AnimeSamaVideoDownloader:
                     except :
                         raise Exception('Erreur survenue lors de la recherche du selecteur d\'episode')
                     
-                playbtn = self.get_episode_page.locator("#playerDF").content_frame.get_by_role("button", name="Play")
-                time.sleep(3)
-                try_len = 0
-                while playbtn.is_visible():
-                    if self.episode_m3u8 is not None:
+                play_button = self.get_episode_page.locator("#playerDF").content_frame.get_by_role("button", name="Play")
+                try_count = 0
+                while try_count < 5:  # Limiter à 5 tentatives
+                    if self.episode_m3u8:  # Si l'URL est capturée, quitter
                         break
-                    try:
-                        playbtn.click(force=True)
-                        if try_len == 0:
-                            time.sleep(5)
-                        elif try_len > 1:
-                            time.sleep(10)
-                        try_len+=1
-                    except:
-                        print('Erreur survenue lors du click sur le bouton play')
+                    if play_button.is_visible():
+                        try:
+                            play_button.click(force=True)
+                            time.sleep(5 if try_count < 2 else 10)
+                            try_count += 1
+                        except:
+                            print("Erreur lors du clic sur le bouton Play.")
                 # Attendre que l'URL m3u8 soit récupérée avant de fermer
                 if self.episode_m3u8 is not None:
                     return self.episode_m3u8

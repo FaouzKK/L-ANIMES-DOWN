@@ -99,8 +99,12 @@ class ChapitersWidget(QtWidgets.QWidget):
     def _setup_ui(self):
         self.main_layout = QtWidgets.QVBoxLayout()
         self.main_layout.addWidget(MHeader("Liste des chapitres/Episodes :"))
-        self.main_layout.addWidget(MInfoLabel("<p>Vous pouvez cliquer sur un chapitre ou un episode pour le télécharger.</p>"))
-        
+        self.main_layout.addWidget(MInfoLabel("""
+<b>Astuce :</b>
+<p>Dans le cas d'une vidéo ou d'un épisode, il est malheureusement nécessaire que le navigateur s'ouvre pour éviter d'être bloqué par les bloqueurs de bots. Cependant, tout se fera automatiquement. Après avoir cliqué sur le bouton "Télécharger", un navigateur s'ouvrira, se dirigera vers la page Anime-sama de l'épisode, puis lancera automatiquement la vidéo afin de récupérer les données nécessaires au téléchargement.</p>
+<p>Notez qu'Anime-sama peut néanmoins intercepter et empêcher l'affichage de la vidéo.</p>
+"""))
+           
         self.loading_button = MLoadingButton("Recharger la liste des chapitres")
         self.loading_button.setStyleSheet("background-color: rgb(240, 240, 240) ; padding : 10px  ; border-radius : 10px")
         self.main_layout.addWidget(self.loading_button)
