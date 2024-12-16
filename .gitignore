@@ -4,3 +4,4 @@ tester.py
 .vscode
 build
 dist
+pyproject.toml
